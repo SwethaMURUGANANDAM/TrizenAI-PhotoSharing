@@ -8,3 +8,4 @@ python-dotenv
 django-cors-headers
 gunicorn
 dj-database-url
+whitenoise
