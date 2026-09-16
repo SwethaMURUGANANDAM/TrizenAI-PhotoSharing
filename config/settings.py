@@ -29,9 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i4pfwcw7u2n+jpdb1=_gs=6a)f=#cc4tu_av@7(k0z-jh*d-87'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
-ALLOWED_HOSTS = []
+if os.getenv("RENDER_EXTERNAL_HOSTNAME"):
+    ALLOWED_HOSTS.append(os.getenv("RENDER_EXTERNAL_HOSTNAME"))
 
 
 # Application definition
@@ -85,15 +87,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trizenai_db',
-        'USER': 'postgres',
-        'PASSWORD': 'Swetha@123456789',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'default': dj_database_url.config(
+        default=(
+            f"postgresql://postgres:{os.getenv('DB_PASSWORD')}"
+            "@localhost:5432/trizenai_db"
+        )
+        )
     }
-}
+    
+
 
 
 # Password validation
