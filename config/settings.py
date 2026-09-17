@@ -154,4 +154,5 @@ cloudinary.config(
 )
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://trizenai-photosharing-1.onrender.com",
 ]
